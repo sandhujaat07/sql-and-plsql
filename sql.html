@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SQL</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    /* Additional CSS styles can be placed here */
+    .explanation {
+      display: none;
+    }
+  </style>
+  <script>
+    // JavaScript function to toggle explanation visibility
+    function toggleExplanation(topicId) {
+      var explanation = document.getElementById(topicId);
+      if (explanation.style.display === "none") {
+        explanation.style.display = "block";
+      } else {
+        explanation.style.display = "none";
+      }
+    }
+  </script>
+</head>
+<body>
+  <header>
+    <h1>SQL Topics</h1>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <ul>
+      <li><a href="#table_creation" onclick="toggleExplanation('table_creation')">Table Creation</a></li>
+      <li><a href="#inserting_values" onclick="toggleExplanation('inserting_values')">Inserting Values</a></li>
+      <li><a href="#updating" onclick="toggleExplanation('updating')">Updating</a></li>
+      <li><a href="#deleting_dropping" onclick="toggleExplanation('deleting_dropping')">Deleting and Dropping</a></li>
+      <li><a href="#querying_table" onclick="toggleExplanation('querying_table')">Querying Database Table</a></li>
+      <li><a href="#aggregate_functions" onclick="toggleExplanation('aggregate_functions')">Aggregate Functions and Grouping</a></li>
+      <li><a href="#views" onclick="toggleExplanation('views')">Creation and Deletion of Views</a></li>
+      <li><a href="#grant_revoke" onclick="toggleExplanation('grant_revoke')">Grant and Revoke Commands</a></li>
+      <li><a href="#commit_rollback" onclick="toggleExplanation('commit_rollback')">Commit and Rollback</a></li>
+      <li><a href="#joins" onclick="toggleExplanation('joins')">Joins</a></li>
+      <li><a href="#set_operators" onclick="toggleExplanation('set_operators')">SET Operators</a></li>
+    </ul>
+
+    <div class="explanation" id="table_creation">
+      <h2>Table Creation</h2>
+      <p>To create a table in SQL, we use the <code>CREATE TABLE</code> statement. Syntax:
+        <pre><code>CREATE TABLE table_name (
+  column1 datatype [optional_constraint],
+  column2 datatype [optional_constraint],
+  ...
+  columnN datatype [optional_constraint]
+);</code></pre>
+        Example:
+        <pre><code>
+CREATE TABLE employees (
+  id INT PRIMARY KEY,
+  name VARCHAR(50),
+  age INT,
+  salary DECIMAL(10, 2)
+);
+</code></pre>
+        Output:
+        <pre><code>
+Table created.
+</code></pre>
+    </div>
+
+    <div class="explanation" id="inserting_values">
+      <h2>Inserting Values</h2>
+      <p>To insert values into a table, we use the <code>INSERT INTO</code> statement. Syntax:
+        <pre><code>INSERT INTO table_name (column1, column2, column3, ...)
+VALUES (value1, value2, value3, ...);</code></pre>
+        Example:
+        <pre><code>
+INSERT INTO employees (id, name, age, salary)
+VALUES (1, 'John Doe', 30, 50000.00);
+</code></pre>
+        Output:
+        <pre><code>
+1 row inserted.
+</code></pre>
+    </div>
+
+    <div class="explanation" id="updating">
+      <h2>Updating</h2>
+      <p>To update existing records in a table, we use the <code>UPDATE</code> statement. Syntax:
+        <pre><code>UPDATE table_name
+SET column1 = value1, column2 = value2, ...
+WHERE condition;</code></pre>
+        Example:
+        <pre><code>
+UPDATE employees
+SET salary = 55000.00
+WHERE id = 1;
+</code></pre>
+        Output:
+        <pre><code>
+1 row updated.
+</code></pre>
+    </div>
+
+    <div class="explanation" id="deleting_dropping">
+      <h2>Deleting and Dropping</h2>
+      <p>To delete records from a table, we use the <code>DELETE FROM</code> statement. Syntax:
+        <pre><code>DELETE FROM table_name
+WHERE condition;</code></pre>
+        Example:
+        <pre><code>
+DELETE FROM employees
+WHERE id = 1;
+</code></pre>
+        Output:
+        <pre><code>
+1 row deleted.
+</code></pre>
+        <p>To drop a table from the database, we use the <code>DROP TABLE</code> statement. Syntax:
+        <pre><code>DROP TABLE table_name;</code></pre>
+        Example:
+        <pre><code>
+DROP TABLE employees;
+</code></pre>
+        Output:
+        <pre><code>
+Table employees dropped.
+</code></pre>
+    </div>
+
+    <div class="explanation" id="querying_table">
+      <h2>Querying Database Table</h2>
+      <p>To retrieve data from a database table, we use the <code>SELECT</code> statement. Syntax:
+        <pre><code>SELECT column1, column2, ...
+FROM table_name
+WHERE condition;</code></pre>
+        Example:
+        <pre><code>
+SELECT * FROM employees;
+</code></pre>
+        Output:
+        <pre><code>
+id  |  name       |  age  |  salary
+----|-------------|-------|---------
+1   |  John Doe   |  30   |  50000.00
+2   |  Jane Smith |  28   |  60000.00
+3   |  Mark Johnson | 32  |  55000.00
+</code></pre>
+    </div>
+
+    <div class="explanation" id="aggregate_functions">
+      <h2>Aggregate Functions and Grouping</h2>
+      <p>Aggregate functions perform a calculation on a set of values and return a single value. Examples of aggregate functions include <code>COUNT</code>, <code>SUM</code>, <code>AVG</code>, <code>MIN</code>, and <code>MAX</code>. Syntax:
+        <pre><code>SELECT aggregate_function(column_name)
+FROM table_name
+WHERE condition;</code></pre>
+        Example:
+        <pre><code>
+SELECT COUNT(id) AS total_employees FROM employees;
+</code></pre>
+        Output:
+        <pre><code>
+total_employees
+---------------
+3
+</code></pre>
+        <p>We can also use <code>GROUP BY</code> clause to group rows that have the same values into summary rows. Syntax:
+        <pre><code>SELECT column1, aggregate_function(column2)
+FROM table_name
+WHERE condition
+GROUP BY column1;</code></pre>
+    </div>
+
+    <div class="explanation" id="views">
+      <h2>Creation and Deletion of Views</h2>
+      <p>A view is a virtual table based on the result set of an SQL statement. It contains rows and columns, just like a real table. Syntax to create a view:
+        <pre><code>CREATE VIEW view_name AS
+SELECT column1, column2, ...
+FROM table_name
+WHERE condition;</code></pre>
+        Example:
+        <pre><code>
+CREATE VIEW employee_details AS
+SELECT id, name, salary
+FROM employees
+WHERE salary > 50000.00;
+</code></pre>
+        Output:
+        <pre><code>
+View created successfully.
+</code></pre>
+        <p>To delete a view, we use the <code>DROP VIEW</code> statement. Syntax:
+        <pre><code>DROP VIEW view_name;</code></pre>
+        Example:
+        <pre><code>
+DROP VIEW employee_details;
+</code></pre>
+        Output:
+        <pre><code>
+View employee_details dropped.
+</code></pre>
+    </div>
+
+    <div class="explanation" id="grant_revoke">
+      <h2>Grant and Revoke Commands</h2>
+      <p>Grant command is used to give privileges to users or roles. Syntax:
+        <pre><code>GRANT privilege_name
+ON object_name
+TO {user_name | PUBLIC | role_name};</code></pre>
+        Example:
+        <pre><code>
+GRANT SELECT, INSERT, UPDATE, DELETE
+ON employees
+TO john_doe;
+</code></pre>
+        Output:
+        <pre><code>
+Privileges granted.
+</code></pre>
+        <p>Revoke command is used to take back privileges from users or roles. Syntax:
+        <pre><code>REVOKE privilege_name
+ON object_name
+FROM {user_name | PUBLIC | role_name};</code></pre>
+        Example:
+        <pre><code>
+REVOKE SELECT, INSERT, UPDATE, DELETE
+ON employees
+FROM john_doe;
+</code></pre>
+        Output:
+        <pre><code>
+Privileges revoked.
+</code></pre>
+    </div>
+
+    <div class="explanation" id="commit_rollback">
+      <h2>Commit and Rollback</h2>
+      <p>Commit command is used to save the changes made by the current transaction. Syntax:
+        <pre><code>COMMIT;</code></pre>
+        Example:
+        <pre><code>
+          -- Initiating a transaction
+          BEGIN TRANSACTION;
+          
+          -- Performing SQL statements
+          
+          -- Committing the transaction
+          COMMIT;
+          
+          -- Alternatively, rolling back the transaction
+          ROLLBACK;
+</code></pre>
+        Output:
+        <pre><code>
+          Transaction committed successfully.
+          Transaction rolled back.
+</code></pre>
+        <p>Rollback command is used to undo the changes made by the current transaction. Syntax:
+        <pre><code>ROLLBACK;</code></pre>
+        Example:
+        <pre><code>
+ROLLBACK;
+</code></pre>
+        Output:
+        <pre><code>
+Changes rolled back.
+</code></pre>
+    </div>
+
+    <div class="explanation" id="joins">
+      <h2>Joins</h2>
+      <p>Joins are used to combine rows from two or more tables, based on a related column between them. Examples of joins include <code>INNER JOIN</code>, <code>LEFT JOIN</code>, <code>RIGHT JOIN</code>, and <code>FULL JOIN</code>. Syntax:
+        <pre><code>SELECT column1, column2, ...
+FROM table1
+INNER JOIN table2
+ON table1.column_name = table2.column_name;</code></pre>
+        Example:
+        <pre><code>
+          SELECT employees.id, employees.name, departments.department_name
+          FROM employees
+          INNER JOIN departments
+          ON employees.department_id = departments.id;
+          
+</code></pre>
+Output:
+        <pre><code>
+id	name	     department_name
+
+ 1	John Doe	      HR
+ 2	Jane Smith     	IT
+ 3	Mark Johnson	  HR
+ 4	Alice Lee	IT
+</code></pre>
+    </div>
+
+    <div class="explanation" id="set_operators">
+      <h2>SET Operators</h2>
+      <p>SET operators are used to combine the result sets of two or more SELECT statements. Examples of SET operators include <code>UNION</code>, <code>UNION ALL</code>, <code>INTERSECT</code>, and <code>MINUS</code>. Syntax:
+        <pre><code>SELECT column1, column2, ...
+FROM table1
+UNION
+SELECT column1, column2, ...
+FROM table2;</code></pre>
+        Example:
+        <pre><code>
+SELECT employee_id, employee_name
+FROM employees
+UNION
+SELECT manager_id, manager_name
+FROM managers;
+</code></pre>
+Output:
+        <pre><code>
+      employee_id 	employee_name
+
+        1	            John Doe
+        2	            Jane Smith
+        3	            Mark Johnson
+        4	            Alice Lee
+        101	          Michael Scott
+        102	          Miranda Priestly
+        103	          Gordon Gekko
+        104            	Don Draper
+</code></pre>
+    </div>
+
+
+  </main>
+</body>
+</html>
